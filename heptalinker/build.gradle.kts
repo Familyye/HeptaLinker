@@ -4,13 +4,14 @@ plugins {
     id("maven-publish")
 }
 
+
 android {
     namespace = "com.hepta.linker"
     compileSdk = 35
 
     defaultConfig {
         minSdk = 24
-        version = "0.0.2"
+        version = "0.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -61,7 +62,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.Thehepta"
                 artifactId = "HeptaLinker"
-                version = "0.0.2"
+                version = "0.0.3"
 
                 // 指定 AAR 文件路径
                 artifact("$buildDir/outputs/aar/heptalinker-release.aar")
@@ -88,6 +89,9 @@ afterEvaluate {
                     }
                 }
             }
+        }
+        tasks.named("publishReleasePublicationToMavenLocal") {
+            dependsOn("bundleReleaseAar")
         }
 //        repositories {
 //            mavenLocal()
