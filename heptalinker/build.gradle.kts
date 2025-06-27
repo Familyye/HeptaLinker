@@ -66,7 +66,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.Thehepta"
                 artifactId = "HeptaLinker"
-                version = "0.0.3"
+                version = "0.0.4"
 
                 // 指定 AAR 文件路径
                 artifact(tasks.named("bundleReleaseAar"))
