@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         minSdk = 24
-        version = "0.0.1"
+        version = "0.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -61,7 +61,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.Thehepta"
                 artifactId = "HeptaLinker"
-                version = "0.0.1"
+                version = "0.0.2"
 
                 // 指定 AAR 文件路径
                 artifact("$buildDir/outputs/aar/heptalinker-release.aar")
