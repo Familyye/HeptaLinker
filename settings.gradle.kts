@@ -22,5 +22,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "HeptaLinker"
-//include(":app")
+include(":app")
 include(":heptalinker")

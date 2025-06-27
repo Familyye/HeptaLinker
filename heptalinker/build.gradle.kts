@@ -44,6 +44,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    publishing {
+        singleVariant("release")
+    }
 }
 
 dependencies {
@@ -65,7 +69,7 @@ afterEvaluate {
                 version = "0.0.3"
 
                 // 指定 AAR 文件路径
-                artifact("$buildDir/outputs/aar/heptalinker-release.aar")
+                artifact(tasks.named("bundleReleaseAar"))
 
                 // 可选：添加 pom 文件信息
                 pom {
@@ -90,11 +94,5 @@ afterEvaluate {
                 }
             }
         }
-        tasks.named("publishReleasePublicationToMavenLocal") {
-            dependsOn("bundleReleaseAar")
-        }
-//        repositories {
-//            mavenLocal()
-//        }
     }
 }
