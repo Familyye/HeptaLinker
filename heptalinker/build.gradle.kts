@@ -54,3 +54,43 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.Thehepta"
+                artifactId = "HeptaLinker"
+                version = "0.0.1"
+
+                // 指定 AAR 文件路径
+                artifact("$buildDir/outputs/aar/heptalinker-release.aar")
+
+                // 可选：添加 pom 文件信息
+                pom {
+                    name.set("HeptaLinker")
+                    description.set("An Android library for linking native code.")
+                    url.set("https://github.com/Thehepta/HeptaLinker ")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/MIT ")
+                        }
+                    }
+                    developers {
+                        developer {
+                            name = "thehepta"
+                            url = "https://github.com/thehepta"
+                        }
+                    }
+                    scm {
+                        url.set("https://github.com/thehepta/heptalinker ")
+                    }
+                }
+            }
+        }
+//        repositories {
+//            mavenLocal()
+//        }
+    }
+}
