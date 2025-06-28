@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     id("maven-publish")
 }
 
@@ -8,27 +7,15 @@ plugins {
 android {
     namespace = "com.hepta.linker"
     compileSdk = 35
-
+    buildToolsVersion = "35.0.0"
+    ndkVersion = "27.0.12077973"
     defaultConfig {
-        minSdk = 24
-        version = "0.0.3"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        minSdk = 28
         externalNativeBuild {
             cmake {
-                cppFlags("")
-            }
-        }
-    }
+//                abiFilters ("armeabi-v7a", "arm64-v8a")
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            }
         }
     }
     externalNativeBuild {
@@ -37,17 +24,26 @@ android {
             version = "3.22.1"
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+    // Enable generation of Prefab packages and include them in the library's AAR.
+    buildFeatures {
+        buildConfig = false
+        prefabPublishing = true
+        androidResources = false
     }
 
-    publishing {
-        singleVariant("release")
+
+    prefab {
+        register("heptalinker") {
+            headers = "src/main/cpp/include"
+        }
     }
+
+    packaging {
+        jniLibs {
+            excludes += "**.so"
+        }
+    }
+
 }
 
 dependencies {
@@ -60,6 +56,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 }
 
+
+
 afterEvaluate {
     publishing {
         publications {
@@ -69,11 +67,11 @@ afterEvaluate {
                 version = "0.0.4"
 
                 // 指定 AAR 文件路径
-                artifact(tasks.named("bundleReleaseAar"))
+//                artifact(tasks.named("bundleReleaseAar"))
 
                 // 可选：添加 pom 文件信息
                 pom {
-                    name.set("HeptaLinker")
+                    name.set("HeptaLinkerNative")
                     description.set("An Android library for linking native code.")
                     url.set("https://github.com/Thehepta/HeptaLinker ")
                     licenses {

@@ -8,3 +8,7 @@ Java_com_hepta_linker_NativeLib_stringFromJNI(
     std::string hello = "Hello from C++===";
     return env->NewStringUTF(hello.c_str());
 }
+
+int add(int a, int b){
+    return a+b;
+}

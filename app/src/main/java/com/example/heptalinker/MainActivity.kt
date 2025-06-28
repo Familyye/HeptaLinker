@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.example.heptalinker.databinding.ActivityMainBinding
-import com.hepta.linker.NativeLib
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        // Used to load the 'linker' library on application startup.
+        init {
+            System.loadLibrary("linker")
+        }
+    }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,9 +19,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val lib = NativeLib()
         // Example of a call to a native method
-        binding.sampleText.text = lib.stringFromJNI()
+        binding.sampleText.text = stringFromJNI()
     }
-
+    external fun  stringFromJNI() : String;
 }

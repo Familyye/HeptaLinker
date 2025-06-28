@@ -9,12 +9,22 @@ android {
 
     defaultConfig {
         applicationId = "com.example.heptalinker"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                arguments ("-DANDROID_STL=c++_shared")
+
+                //                cppFlags "-frtti -fexceptions -Wpointer-arith"
+                abiFilters("armeabi-v7a", "arm64-v8a")
+            }
+        }
+
     }
 
     buildTypes {
@@ -33,9 +43,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    externalNativeBuild {
+        cmake {
+            path("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
+        }
+    }
 
     buildFeatures {
         viewBinding = true
+        prefab = true
     }
 }
 
@@ -47,7 +64,11 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
-    implementation (libs.heptalinker)
+//    implementation(libs.dobby)
+
+//    implementation(files("/home/chic/AndroidStudioProjects/HeptaLinker/app/src/main/libs/heptalinker-release.aar"))
+//    implementation(project(":heptalinker"))
+    implementation (libs.jsoncpp)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
