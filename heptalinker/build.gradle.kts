@@ -13,8 +13,10 @@ android {
         minSdk = 28
         externalNativeBuild {
             cmake {
-//                abiFilters ("armeabi-v7a", "arm64-v8a")
-
+                arguments ("-DANDROID_STL=c++_shared")
+//
+////                abiFilters ("armeabi-v7a", "arm64-v8a")
+//
             }
         }
     }
@@ -28,7 +30,6 @@ android {
     buildFeatures {
         buildConfig = false
         prefabPublishing = true
-        androidResources = false
     }
 
 
@@ -46,51 +47,40 @@ android {
 
 }
 
-dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-}
-
-
-
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                groupId = "com.github.Thehepta"
-                artifactId = "HeptaLinker"
-                version = "0.0.4"
-
-                // 指定 AAR 文件路径
-//                artifact(tasks.named("bundleReleaseAar"))
-
-                // 可选：添加 pom 文件信息
-                pom {
-                    name.set("HeptaLinkerNative")
-                    description.set("An Android library for linking native code.")
-                    url.set("https://github.com/Thehepta/HeptaLinker ")
-                    licenses {
-                        license {
-                            name.set("MIT License")
-                            url.set("https://opensource.org/licenses/MIT ")
-                        }
-                    }
-                    developers {
-                        developer {
-                            name = "thehepta"
-                            url = "https://github.com/thehepta"
-                        }
-                    }
-                    scm {
-                        url.set("https://github.com/thehepta/heptalinker ")
-                    }
-                }
-            }
-        }
-    }
-}
+//
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            create<MavenPublication>("release") {
+//                groupId = "com.github.Thehepta"
+//                artifactId = "HeptaLinker"
+//                version = "0.0.4"
+//
+//                // 指定 AAR 文件路径
+////                artifact(tasks.named("bundleReleaseAar"))
+//
+//                // 可选：添加 pom 文件信息
+//                pom {
+//                    name.set("HeptaLinkerNative")
+//                    description.set("An Android library for linking native code.")
+//                    url.set("https://github.com/Thehepta/HeptaLinker ")
+//                    licenses {
+//                        license {
+//                            name.set("MIT License")
+//                            url.set("https://opensource.org/licenses/MIT ")
+//                        }
+//                    }
+//                    developers {
+//                        developer {
+//                            name = "thehepta"
+//                            url = "https://github.com/thehepta"
+//                        }
+//                    }
+//                    scm {
+//                        url.set("https://github.com/thehepta/heptalinker ")
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

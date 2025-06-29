@@ -54,6 +54,7 @@ android {
         viewBinding = true
         prefab = true
     }
+    ndkVersion = "27.0.12077973"
 }
 
 
@@ -67,8 +68,8 @@ dependencies {
 //    implementation(libs.dobby)
 
 //    implementation(files("/home/chic/AndroidStudioProjects/HeptaLinker/app/src/main/libs/heptalinker-release.aar"))
-//    implementation(project(":heptalinker"))
-    implementation (libs.jsoncpp)
+    implementation(project(":heptalinker"))
+//    implementation (libs.jsoncpp)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

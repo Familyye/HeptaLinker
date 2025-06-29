@@ -11,7 +11,8 @@ cmake_minimum_required(VERSION 3.22.1)
 # build script scope).
 project("linker")
 
-#find_package(heptalinker REQUIRED CONFIG)
+find_package(heptalinker REQUIRED CONFIG)
+#link_libraries(heptalinker::heptalinker)
 
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
@@ -20,8 +21,8 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this
 # build script, prebuilt third-party libraries, or Android system libraries.
-target_link_libraries(${CMAKE_PROJECT_NAME}
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
         # List libraries link to the target library
-#        heptalinker
+        heptalinker::heptalinker
         android
         log)
