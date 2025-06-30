@@ -54,10 +54,10 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.Thehepta"
                 artifactId = "HeptaLinker"
-                version = "0.0.5"
+                version = "0.0.6"
 
                 // 指定 AAR 文件路径
-//                artifact(tasks.named("bundleReleaseAar"))
+                artifact(tasks.named("bundleReleaseAar"))
 
                 // 可选：添加 pom 文件信息
                 pom {

@@ -67,7 +67,6 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 //    implementation(libs.dobby)
 
-//    implementation(files("/home/chic/AndroidStudioProjects/HeptaLinker/app/src/main/libs/heptalinker-release.aar"))
     implementation(project(":heptalinker"))
 //    implementation (libs.jsoncpp)
     testImplementation(libs.junit)
