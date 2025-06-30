@@ -47,40 +47,40 @@ android {
 
 }
 
-//
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            create<MavenPublication>("release") {
-//                groupId = "com.github.Thehepta"
-//                artifactId = "HeptaLinker"
-//                version = "0.0.4"
-//
-//                // 指定 AAR 文件路径
-////                artifact(tasks.named("bundleReleaseAar"))
-//
-//                // 可选：添加 pom 文件信息
-//                pom {
-//                    name.set("HeptaLinkerNative")
-//                    description.set("An Android library for linking native code.")
-//                    url.set("https://github.com/Thehepta/HeptaLinker ")
-//                    licenses {
-//                        license {
-//                            name.set("MIT License")
-//                            url.set("https://opensource.org/licenses/MIT ")
-//                        }
-//                    }
-//                    developers {
-//                        developer {
-//                            name = "thehepta"
-//                            url = "https://github.com/thehepta"
-//                        }
-//                    }
-//                    scm {
-//                        url.set("https://github.com/thehepta/heptalinker ")
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.github.Thehepta"
+                artifactId = "HeptaLinker"
+                version = "0.0.5"
+
+                // 指定 AAR 文件路径
+//                artifact(tasks.named("bundleReleaseAar"))
+
+                // 可选：添加 pom 文件信息
+                pom {
+                    name.set("HeptaLinkerNative")
+                    description.set("An Android library for linking native code.")
+                    url.set("https://github.com/Thehepta/HeptaLinker ")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/MIT ")
+                        }
+                    }
+                    developers {
+                        developer {
+                            name = "thehepta"
+                            url = "https://github.com/thehepta"
+                        }
+                    }
+                    scm {
+                        url.set("https://github.com/thehepta/heptalinker ")
+                    }
+                }
+            }
+        }
+    }
+}
