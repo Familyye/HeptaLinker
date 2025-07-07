@@ -12,9 +12,6 @@
 #include "linker.h"
 #include "elf_symbol_resolver.h"
 #include "linker_debug.h"
-#include "soinfo_11_transform.h"
-#include "soinfo_12_transform.h"
-#include "soinfo_12L_transform.h"
 #include "sys/ifunc.h"
 #include <sys/auxv.h>
 
@@ -1058,19 +1055,6 @@ void soinfo::transform(soinfo * si) {
     this->phnum = si->phnum;
     this->phdr = si->phdr;
     this->prelink_image();
-
-
-    //寻找对应android版本soinfo的结构体，然后将soinfo强转成对应版本的，然后将属性赋值给当前使用的这个soinfo
-    //每兼容一个版本就要多写一个结构体，但是速度快
-//    if(android_get_device_api_level() == 33){              //android 13
-//
-//    } else if (android_get_device_api_level() == 32){      //android 12l
-//        android_12l_soinfo_transform(this, reinterpret_cast<soinfo_12l_transform *>(si));
-//    } else if (android_get_device_api_level() == 31){      //android 12
-//        android_12_soinfo_transform(this, reinterpret_cast<soinfo_12_transform *>(si));
-//    } else if (android_get_device_api_level() == 30){      //android 11
-//        android_11_soinfo_transform(this, reinterpret_cast<soinfo_11_transform *>(si));
-//    }
 
 }
 //

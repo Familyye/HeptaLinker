@@ -58,14 +58,36 @@ soinfo*  find_hepta_loadlibrary(const char * libname){
 soinfo* (*solist_get_head)();
 soinfo* (*solist_get_somain)();
 char* (*soinfo_get_soname)(soinfo*);
+std::unordered_map<uintptr_t, soinfo*> *g_soinfo_handles_map;
+soinfo* solist;
+
+
+
 
 __unused __attribute__((constructor(101)))
 void system_Linker_init(){
+    solist =  *(soinfo**)linkerResolveElfInternalSymbol2(get_android_linker_path(),"__dl__ZL6solist");
     solist_get_head = (soinfo* (*)()) linkerResolveElfInternalSymbol2( get_android_linker_path(), "__dl__Z15solist_get_headv");
     solist_get_somain = (soinfo* (*)()) linkerResolveElfInternalSymbol2(get_android_linker_path(), "__dl__Z17solist_get_somainv");
     soinfo_get_soname = (char* (*)(soinfo*)) linkerResolveElfInternalSymbol2(get_android_linker_path(), "__dl__ZNK6soinfo10get_sonameEv");
+    g_soinfo_handles_map =  reinterpret_cast<std::unordered_map<uintptr_t, soinfo *> *>(linkerResolveElfInternalSymbol2(get_android_linker_path(), "__dl_g_soinfo_handles_map"));
+
 }
 
+
+
+static soinfo* soinfo_from_handle(void* handle) {
+    if ((reinterpret_cast<uintptr_t>(handle) & 1) != 0) {
+        auto it = g_soinfo_handles_map->find(reinterpret_cast<uintptr_t>(handle));
+        if (it == g_soinfo_handles_map->end()) {
+            return nullptr;
+        } else {
+            return it->second;
+        }
+    }
+
+    return static_cast<soinfo*>(handle);
+}
 
 
 static inline uintptr_t untag_address(uintptr_t p) {
@@ -125,7 +147,19 @@ soinfo* find_all_library_byname(const char* soname){
     return nullptr;
 }
 
+std::vector<soinfo *> find_all_library_name2() {
+    std::vector<soinfo *> linker_solist;
+    //过滤掉第一个
+    for (soinfo *si = solist->next; si != nullptr; si = si->next) {
+        char *ret_name = soinfo_get_soname(reinterpret_cast<soinfo *>(si));
+        linker_solist.push_back(si);
+    }
+    return linker_solist;
+}
+
 soinfo* find_system_library_byname(const char* soname) {
+
+//    dlopen(soname,)
 
     for (soinfo* si = solist_get_head(); si != nullptr; si = si->next) {
         char* ret_name = soinfo_get_soname(si);

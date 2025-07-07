@@ -327,21 +327,22 @@ int get_android_system_version() {
     return os_version_int;
 }
 
+static int callback(struct dl_phdr_info *info, size_t size, void *data){
+    static bool first = false;
+    Dl_info * dl_info = (Dl_info * )data;
+    if(strstr(info->dlpi_name,"linker")){
+        dl_info->dli_fname = info->dlpi_name;
+        dl_info->dli_fbase = reinterpret_cast<void *>(info->dlpi_addr);
+        return 1;
+    }
+    return 0;//返回0 --> 继续遍历
+}
+
 
 const char *get_android_linker_path() {
-#if __LP64__
-    if (get_android_system_version() >= 29) {
-        return (const char *)"/apex/com.android.runtime/bin/linker64";
-    } else {
-        return (const char *)"/system/bin/linker64";
-    }
-#else
-    if (get_android_system_version() >= 29) {
-        return (const char *)"/apex/com.android.runtime/bin/linker";
-    } else {
-        return (const char *)"/system/bin/linker";
-    }
-#endif
+    Dl_info info;
+    dl_iterate_phdr(callback, &info);//遍历so
+    return info.dli_fname;
 }
 
 

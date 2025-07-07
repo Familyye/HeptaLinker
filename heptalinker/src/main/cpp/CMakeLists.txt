@@ -48,9 +48,6 @@ add_library( # Sets the name of the library.
         linker_relocate.cpp
         linker_gnu_hash_neon.cpp
         jni_proxy.cpp
-        soinfo_12_transform.cpp
-        soinfo_11_transform.cpp
-        soinfo_12L_transform.cpp
         entry.cpp
 )
 
